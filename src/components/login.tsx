@@ -7,31 +7,37 @@ import bgImageSrcSm2x from '@patternfly/patternfly/assets/images/pfbg_768@2x.jpg
 import '@patternfly/patternfly/utilities/Accessibility/accessibility.css';
 import '@patternfly/patternfly/utilities/Spacing/spacing.css';
 import {
-    BackgroundImage,
-    BackgroundImageSrc,
-    Dropdown,
-    DropdownItem,
-    DropdownToggle,
-    ListItem,
-    LoginFooterItem,
-    LoginForm,
-    LoginPage
+  BackgroundImage,
+  BackgroundImageSrc,
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  ListItem,
+  LoginFooterItem,
+  LoginForm,
+  LoginPage
 } from '@patternfly/react-core';
-import * as React from 'react';
-import './App.css';
+// import { push } from 'connected-react-router';
+import React from 'react';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { Dispatch } from 'redux';
+import { decrement, increment } from '../actions/counter';
+import '../App.css';
+import { IGState } from '../reducers';
 import brandImg from './LPGSYS.svg';
 /**
  * Note: When using background-filter.svg, you must also include #image_overlay as the fragment identifier
  */
 
 const bgImages = {
-    [BackgroundImageSrc.lg]: bgImageSrcLg,
-    [BackgroundImageSrc.sm]: bgImageSrcSm,
-    [BackgroundImageSrc.sm2x]: bgImageSrcSm2x,
-    [BackgroundImageSrc.xs]: bgImageSrcXs,
-    [BackgroundImageSrc.xs2x]: bgImageSrcXs2x,
-    [BackgroundImageSrc.filter]: bgImageSrcFilter + "#image_overlay"
-  };
+  [BackgroundImageSrc.lg]: bgImageSrcLg,
+  [BackgroundImageSrc.sm]: bgImageSrcSm,
+  [BackgroundImageSrc.sm2x]: bgImageSrcSm2x,
+  [BackgroundImageSrc.xs]: bgImageSrcXs,
+  [BackgroundImageSrc.xs2x]: bgImageSrcXs2x,
+  [BackgroundImageSrc.filter]: bgImageSrcFilter + "#image_overlay"
+};
 
 interface IState {
   isDropDownOpen: boolean;
@@ -40,7 +46,7 @@ interface IState {
   usernameValue: string;
 }
 
-class LpgsysLoginPage extends React.Component<{}, IState> {
+class Login extends React.Component<RouteComponentProps<any> & IStateProps & IDispatchProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,7 +58,7 @@ class LpgsysLoginPage extends React.Component<{}, IState> {
   }
 
   public render() {
-    const isDropDownOpen  = this.state.isDropDownOpen;
+    const isDropDownOpen = this.state.isDropDownOpen;
     const dropdownItems = [
       <DropdownItem key="japanese">Japanese</DropdownItem>,
       <DropdownItem key="english">English</DropdownItem>
@@ -87,7 +93,7 @@ class LpgsysLoginPage extends React.Component<{}, IState> {
     );
 
     const loginForm = (
-      <LoginForm
+      <LoginForm action="javascript:void(0)"
         usernameLabel="統合ID"
         usernameValue={this.state.usernameValue}
         onChangeUsername={this.handleUsernameChange}
@@ -102,6 +108,7 @@ class LpgsysLoginPage extends React.Component<{}, IState> {
         isRememberMeChecked={this.state.isRememberMeChecked}
         onChangeRememberMe={this.onRememberMeClick}
         rememberMeAriaLabel="Remember me Checkbox"
+        onLoginButtonClick={this.onLoginButtonClick}
       />
     );
 
@@ -109,22 +116,28 @@ class LpgsysLoginPage extends React.Component<{}, IState> {
       <React.Fragment>
         <BackgroundImage src={bgImages} />
         <LoginPage
-            footerListVariants="inline"
-            brandImgSrc={brandImg}
-            brandImgAlt="PatternFly logo"
-            // backgroundImgSrc={"/assets/images/pfbg_1200.jpg"}
-            backgroundImgAlt="Images"
-            footerListItems={listItem}
-            textContent="このシステムはTOKAI LPG基幹システムです。"
-            loginTitle="統合IDでログインしましょう"
-            signUpForAccountMessage={signUpMessage}
-            languageSelector={languageDropdown}
+          footerListVariants="inline"
+          brandImgSrc={brandImg}
+          brandImgAlt="PatternFly logo"
+          // backgroundImgSrc={"/assets/images/pfbg_1200.jpg"}
+          backgroundImgAlt="Images"
+          footerListItems={listItem}
+          textContent="このシステムはTOKAI LPG基幹システムです。"
+          loginTitle="統合IDでログインしましょう"
+          signUpForAccountMessage={signUpMessage}
+          languageSelector={languageDropdown}
         >
-            {loginForm}
+          {loginForm}
         </LoginPage>
       </React.Fragment>
     );
   }
+
+  private onLoginButtonClick = event => {
+    // tslint:disable-next-line:no-console
+    console.log(this.props.history);
+    this.props.history.push("/dashboard");
+  };
 
   private onDropDownToggle = isOpen => {
     this.setState({
@@ -149,6 +162,25 @@ class LpgsysLoginPage extends React.Component<{}, IState> {
   private onRememberMeClick = () => {
     this.setState({ isRememberMeChecked: !this.state.isRememberMeChecked });
   };
+
 }
 
-export default LpgsysLoginPage;
+interface IStateProps {
+  count: number
+}
+
+interface IDispatchProps {
+  increment: () => void
+  decrement: () => void
+}
+
+const mapStateToProps = (state: IGState) => ({
+  count: state.count,
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  decrement: () => dispatch(decrement()),
+  increment: () => dispatch(increment()),
+})
+
+export default connect<IStateProps, IDispatchProps, RouteComponentProps<any>>(mapStateToProps, mapDispatchToProps)(Login);

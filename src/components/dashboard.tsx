@@ -12,6 +12,7 @@ import { Avatar, BackgroundImage, BackgroundImageSrc, Brand, Button, ButtonVaria
 import { BellIcon, CogIcon } from '@patternfly/react-icons';
 import { global_breakpoint_md as breakpointMd } from '@patternfly/react-tokens';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 interface IState {
   activeItem: number;
@@ -76,7 +77,7 @@ class Dashboard extends React.Component<{}, IState> {
       <Nav onSelect={this.onNavSelect} onToggle={this.onNavToggle} aria-label="Nav">
         <NavList>
           <NavItem to="#nav-link1" itemId={0} isActive={activeItem === 0}>
-            メニュー1
+            <Link to="/">ログイン画面</Link>
           </NavItem>
           <NavItem to="#nav-link2" itemId={1} isActive={activeItem === 1}>
             メニュー2
@@ -119,7 +120,7 @@ class Dashboard extends React.Component<{}, IState> {
         <ToolbarGroup>
           <ToolbarItem className="pf-u-hidden-on-lg pf-u-mr-0">
             <Dropdown
-              className="pf-m-plain"
+              isPlain={true}
               position="right"
               onSelect={this.onKebabDropdownSelect}
               toggle={<KebabToggle onToggle={this.onKebabDropdownToggle} />}
@@ -129,11 +130,11 @@ class Dashboard extends React.Component<{}, IState> {
           </ToolbarItem>
           <ToolbarItem className="pf-u-sr-only pf-u-visible-on-md">
             <Dropdown
-              className="pf-m-plain"
+              isPlain={true}
               position="right"
               onSelect={this.onDropdownSelect}
               isOpen={isDropdownOpen}
-              toggle={<DropdownToggle onToggle={this.onDropdownToggle}>ユーザ1</DropdownToggle>}
+              toggle={<DropdownToggle onToggle={this.onDropdownToggle}>user1</DropdownToggle>}
               dropdownItems={userDropdownItems}
             />
           </ToolbarItem>
@@ -166,14 +167,14 @@ class Dashboard extends React.Component<{}, IState> {
         <Page header={Header} sidebar={Sidebar}>
           <PageSection variant={PageSectionVariants.light}>
             <TextContent>
-              <Text component="h1">Hello World!</Text>
+              <Text component="h1">新設獲得業務</Text>
               <Text component="p">
-                PatternFly 4 + Reactのサンプルアプリケーションです。
+                営業向けの新設獲得業務を開始します
               </Text>
             </TextContent>
           </PageSection>
           <PageSection>
-            <Button variant="primary">Hello</Button>
+            <Button variant="primary">ウィザード実行</Button>
           </PageSection>
         </Page>
       </React.Fragment>
