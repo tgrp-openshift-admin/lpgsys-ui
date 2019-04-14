@@ -1,18 +1,14 @@
-import bgImageSrcFilter from '@patternfly/patternfly/assets/images/background-filter.svg';
 import avatarImg from '@patternfly/patternfly/assets/images/img_avatar.svg';
 import brandImg from '@patternfly/patternfly/assets/images/l_pf-reverse-164x11.png';
-import bgImageSrcLg from '@patternfly/patternfly/assets/images/pfbg_1200.jpg';
-import bgImageSrcXs from '@patternfly/patternfly/assets/images/pfbg_576.jpg';
-import bgImageSrcXs2x from '@patternfly/patternfly/assets/images/pfbg_576@2x.jpg';
-import bgImageSrcSm from '@patternfly/patternfly/assets/images/pfbg_768.jpg';
-import bgImageSrcSm2x from '@patternfly/patternfly/assets/images/pfbg_768@2x.jpg';
 import '@patternfly/patternfly/utilities/Accessibility/accessibility.css';
 import '@patternfly/patternfly/utilities/Spacing/spacing.css';
-import { Avatar, BackgroundImage, BackgroundImageSrc, Brand, Button, ButtonVariant, Dropdown, DropdownItem, DropdownSeparator, DropdownToggle, KebabToggle, Nav, NavItem, NavList, Page, PageHeader, PageSection, PageSectionVariants, PageSidebar, Text, TextContent, Toolbar, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
+import { Avatar, Brand, Breadcrumb, BreadcrumbItem, Button, ButtonVariant, Dropdown, DropdownItem, DropdownSeparator, DropdownToggle, KebabToggle, Nav, NavItem, NavList, Page, PageHeader, PageSection, PageSectionVariants, PageSidebar, Text, TextContent, Toolbar, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
 import { BellIcon, CogIcon } from '@patternfly/react-icons';
 import { global_breakpoint_md as breakpointMd } from '@patternfly/react-tokens';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import LpgsysBackgroundImage from 'src/components/BackgroundImage'
+import ValidationWizard from "./ValidationWizard";
 
 interface IState {
   activeItem: number;
@@ -40,7 +36,7 @@ class Dashboard extends React.Component<{}, IState> {
     });
   };
 
-  public onDropdownSelect = event => {
+  public onDropdownSelect = () => {
     this.setState({
       isDropdownOpen: !this.state.isDropdownOpen
     });
@@ -52,7 +48,7 @@ class Dashboard extends React.Component<{}, IState> {
     });
   };
 
-  public onKebabDropdownSelect = event => {
+  public onKebabDropdownSelect = () => {
     this.setState({
       isKebabDropdownOpen: !this.state.isKebabDropdownOpen
     });
@@ -141,14 +137,6 @@ class Dashboard extends React.Component<{}, IState> {
         </ToolbarGroup>
       </Toolbar>
     );
-    const bgImages = {
-      [BackgroundImageSrc.lg]: bgImageSrcLg,
-      [BackgroundImageSrc.sm]: bgImageSrcSm,
-      [BackgroundImageSrc.sm2x]: bgImageSrcSm2x,
-      [BackgroundImageSrc.xs]: bgImageSrcXs,
-      [BackgroundImageSrc.xs2x]: bgImageSrcXs2x,
-      [BackgroundImageSrc.filter]: bgImageSrcFilter + "#image_overlay"
-    };
 
     const Header = (
       <PageHeader
@@ -163,8 +151,18 @@ class Dashboard extends React.Component<{}, IState> {
 
     return (
       <React.Fragment>
-        <BackgroundImage src={bgImages} />
-        <Page header={Header} sidebar={Sidebar}>
+        <LpgsysBackgroundImage />
+        <Page header={Header} sidebar={Sidebar} >
+          <PageSection variant={PageSectionVariants.light}>
+            <Breadcrumb>
+              <BreadcrumbItem to="#">Section Home</BreadcrumbItem>
+              <BreadcrumbItem to="#">Section Title</BreadcrumbItem>
+              <BreadcrumbItem to="#">Section Title</BreadcrumbItem>
+              <BreadcrumbItem to="#" isActive={true}>
+                Section Landing
+          </BreadcrumbItem>
+            </Breadcrumb>
+          </PageSection>
           <PageSection variant={PageSectionVariants.light}>
             <TextContent>
               <Text component="h1">新設獲得業務</Text>
@@ -174,7 +172,7 @@ class Dashboard extends React.Component<{}, IState> {
             </TextContent>
           </PageSection>
           <PageSection>
-            <Button variant="primary">ウィザード実行</Button>
+            <ValidationWizard />
           </PageSection>
         </Page>
       </React.Fragment>

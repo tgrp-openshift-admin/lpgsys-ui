@@ -9,9 +9,6 @@ import '@patternfly/patternfly/utilities/Spacing/spacing.css';
 import {
   BackgroundImage,
   BackgroundImageSrc,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
   ListItem,
   LoginFooterItem,
   LoginForm,
@@ -58,19 +55,7 @@ class Login extends React.Component<RouteComponentProps<any> & IStateProps & IDi
   }
 
   public render() {
-    const isDropDownOpen = this.state.isDropDownOpen;
-    const dropdownItems = [
-      <DropdownItem key="japanese">Japanese</DropdownItem>,
-      <DropdownItem key="english">English</DropdownItem>
-    ];
-    const languageDropdown = (
-      <Dropdown
-        dropdownItems={dropdownItems}
-        onSelect={this.onDropDownSelect}
-        toggle={<DropdownToggle onToggle={this.onDropDownToggle}>Japanese</DropdownToggle>}
-        isOpen={isDropDownOpen}
-      />
-    );
+
 
     const signUpMessage = (
       <React.Fragment>
@@ -97,12 +82,10 @@ class Login extends React.Component<RouteComponentProps<any> & IStateProps & IDi
         usernameLabel="統合ID"
         usernameValue={this.state.usernameValue}
         onChangeUsername={this.handleUsernameChange}
-        usernameHelperTextInvalid="統合IDが存在しません"
         isValidUsername={true}
         passwordLabel="パスワード"
         passwordValue={this.state.passwordValue}
         onChangePassword={this.handlePasswordChange}
-        passwordHelperTextInvalid="パスワードが間違っています"
         isValidPassword={true}
         rememberMeLabel="30日間ログインしたままにする"
         isRememberMeChecked={this.state.isRememberMeChecked}
@@ -125,7 +108,6 @@ class Login extends React.Component<RouteComponentProps<any> & IStateProps & IDi
           textContent="このシステムはTOKAI LPG基幹システムです。"
           loginTitle="統合IDでログインしましょう"
           signUpForAccountMessage={signUpMessage}
-          languageSelector={languageDropdown}
         >
           {loginForm}
         </LoginPage>
@@ -137,18 +119,6 @@ class Login extends React.Component<RouteComponentProps<any> & IStateProps & IDi
     // tslint:disable-next-line:no-console
     console.log(this.props.history);
     this.props.history.push("/dashboard");
-  };
-
-  private onDropDownToggle = isOpen => {
-    this.setState({
-      isDropDownOpen: isOpen
-    });
-  };
-
-  private onDropDownSelect = event => {
-    this.setState({
-      isDropDownOpen: !this.state.isDropDownOpen
-    });
   };
 
   private handleUsernameChange = value => {
