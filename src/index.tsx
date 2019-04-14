@@ -10,7 +10,7 @@ const store = configureStore();
 const render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <AppContainer>
+      <AppContainer >
         <App history={history} />
       </AppContainer>
     </Provider>,

@@ -5,7 +5,7 @@ import Login from '../components/login'
 
 
 const routes = (
-  <div>
+  <div style={{ height: '100%' }}>
     <Switch>
       <Route exact={true} path="/" component={Login} />
       <Route path="/dashboard" component={Dashboard} />
