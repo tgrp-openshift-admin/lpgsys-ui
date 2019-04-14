@@ -15,6 +15,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts-ts": "3.1.0",
     "redux": "^4.0.1",
+    "react-hot-loader": "^4.8.3",
     "webpack": "3.11.0"
   },
   "scripts": {
@@ -34,7 +35,6 @@
     "@types/react-router": "^4.4.5",
     "@types/react-router-dom": "^4.3.2",
     "@types/webpack-env": "^1.13.9",
-    "react-hot-loader": "^4.8.3",
     "ts-loader": "^5.3.3",
     "typescript": "^3.4.3",
     "webpack-cli": "^3.3.0",
